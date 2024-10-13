@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1 th:text="${file.fileName}"></h1>
+    <pre th:text="${#strings.arrayToString(file.fileData, 'UTF-8')}"></pre>
+    <a href="javascript:history.back()">Go Back</a>
+</body>
+</html>

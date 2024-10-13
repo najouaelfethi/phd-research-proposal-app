@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier Proposition</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #4CAF50;
+            border-radius: 4px;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h1>Modifier une Proposition</h1>
+    
+    <form th:action="@{/professor/propositions/edit}" method="post">
+        <input type="hidden" th:name="id" th:value="${proposal.id}"/> <!-- Hidden ID for update -->
+
+        <label for="title">Titre</label>
+        <input type="text" id="title" name="title" th:value="${proposal.title}" placeholder="Titre" required>
+        
+        <label for="discipline">Discipline</label>
+        <select id="discipline" name="discipline.id" required>
+            <option value="" disabled>Select Discipline</option>
+            <option th:each="discipline : ${disciplines}" 
+                    th:value="${discipline.id}" 
+                    th:text="${discipline.name}" 
+                    th:if="${discipline.id == proposal.discipline.id}"></option>
+        </select>
+        
+        <label for="specialization">Spécialisation</label>
+        <select id="specialization" name="specialization.id" required>
+            <option value="" disabled>Select Specialization</option>
+            <option th:each="specialization : ${specializations}" 
+                    th:value="${specialization.id}" 
+                    th:text="${specialization.name}" 
+                    th:if="${specialization.id == proposal.specialization.id}"></option>
+        </select>
+                
+        <label for="description">Discipline Detaillée</label>
+        <input type="text" id="description" name="description" th:value="${proposal.description}" placeholder="Discipline Detaillée" required>
+        
+        <label for="requiredSkills">Compétences Requises</label>
+        <input type="text" id="requiredSkills" name="requiredSkills" th:value="${proposal.requiredSkills}" placeholder="Compétences Requises" required>
+        
+        <label for="researchObjectives">Objectifs de Recherche</label>
+        <input type="text" id="researchObjectives" name="researchObjectives" th:value="${proposal.researchObjectives}" placeholder="Objectifs de Recherche" required>
+  
+        
+        <label for="numberOfApplications">Nombre de candidatures possible</label>
+        <input type="number" id="numberOfApplications" name="numberOfApplications" th:value="${proposal.numberOfApplications}" placeholder="Nombre de candidatures possible" required>
+       
+        <label for="status">Statut</label>
+        <input type="text" id="status" name="status" th:value="${proposal.status}" placeholder="Statut" required>
+        
+        <button type="submit">Mettre à jour Proposition</button>
+    </form>
+</div>
+
+</body>
+</html>

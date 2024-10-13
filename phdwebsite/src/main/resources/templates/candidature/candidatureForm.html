@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter Candidature</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+            /* Sidebar styling */
+        .sidebar {
+            width: 220px;
+            background-color: #ffffff;
+            border-right: 1px solid #e0e0e0;
+            height: 100vh;
+            position: fixed;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h3 {
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #e0f7e0;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #4CAF50;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebar">
+        <h3>Navigation</h3>
+        <a href="/student/propositions">Propositions des Sujets</a>
+        <a href="/candidature/form">Ajouter une Candidature</a>
+        <a href="/candidature/students">Liste des Candidatures</a>
+        <a href="/roleSelection">Se déconnecter</a>
+    </div>
+<div class="form-container">
+    <h1>Soumettre votre Candidature</h1>
+    
+    <form th:action="@{/candidature/submit}" th:object="${candidature}" method="post" enctype="multipart/form-data">
+        <label for="fullName">Nom Complet:</label>
+        <input type="text" id="fullName" th:field="*{fullName}" placeholder="Nom Complet" required/>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" placeholder="Email" required/>
+
+        <label for="discipline">Discipline:</label>
+        <select id="discipline" th:field="*{discipline.id}" required>
+            <option value="" disabled selected>Sélectionner la Discipline</option>
+            <option th:each="discipline : ${disciplines}" 
+                    th:value="${discipline.id}" 
+                    th:text="${discipline.name}"></option>
+        </select>
+
+        <label for="specialization">Spécialisation:</label>
+        <select id="specialization" th:field="*{specialization.id}" required>
+            <option value="" disabled selected>Sélectionner la Spécialisation</option>
+            <option th:each="specialization : ${specializations}" 
+                    th:value="${specialization.id}" 
+                    th:text="${specialization.name}"></option>
+        </select>
+
+        <label for="proposal">Proposition:</label>
+        <select id="proposal" th:field="*{proposal.id}" required>
+            <option value="" disabled selected>Sélectionner la Proposition</option>
+            <option th:each="proposal : ${proposals}" 
+                    th:value="${proposal.id}" 
+                    th:text="${proposal.title}"></option>
+        </select>
+        
+        <label for="cv">CV:</label>
+        <input type="file" id="cv" name="cv" required/>
+        <small>Maximum file size: 5MB</small>
+        
+        <label for="motivationalLetter">Lettre de Motivation:</label>
+        <input type="file" id="motivationalLetter" name="motivationalLetter" required/>
+        <small>Maximum file size: 5MB</small>
+
+        <label for="transcripts">Relevés de notes:</label>
+        <input type="file" id="transcripts" name="transcripts" required/>
+        <small>Maximum file size: 5MB</small>
+
+        
+
+        <button type="submit">Soumettre</button>
+    </form>
+</div>
+
+</body>
+</html>
+ 
+ 
